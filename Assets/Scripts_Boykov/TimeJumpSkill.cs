@@ -36,6 +36,16 @@ namespace Gamekit2D
         #endregion
 
 
+        #region Properties
+
+        public int CurrentCharges
+        {
+            get => _currentCharges;
+        }
+
+        #endregion
+
+
         #region UnityMethods
 
         private void OnEnable()
