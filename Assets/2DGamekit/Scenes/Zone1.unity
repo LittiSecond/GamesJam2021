@@ -22421,6 +22421,9 @@ MonoBehaviour:
   - {fileID: 1472066827}
   - {fileID: 1361123978}
   _secondUseDelay: 0.2
+  _postProcess: {fileID: 1926632201}
+  _normalProfile: {fileID: 0}
+  _anomalusProfile: {fileID: 11400000, guid: 642d479fd62b96b4c9797b49bb84d49c, type: 2}
 --- !u!4 &880246864
 Transform:
   m_ObjectHideFlags: 0
@@ -46328,7 +46331,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 1906810831}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 268451840
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 1
@@ -46368,7 +46371,7 @@ MonoBehaviour:
       colorBlindnessStrength: 1
   m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
   m_ShowToolkit: 0
-  m_ShowCustomSorter: 0
+  m_ShowCustomSorter: 1
   breakBeforeColorGrading: 0
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using System.Collections;
 
 
@@ -10,6 +11,9 @@ namespace Gamekit2D
 
         [SerializeField] private BaseTimeDifferentObject[] _timeDifferentObjects;
         [SerializeField] private float _secondUseDelay = 0.5f;
+        [SerializeField] private PostProcessVolume _postProcess;
+        [SerializeField] private PostProcessProfile _normalProfile;
+        [SerializeField] private PostProcessProfile _anomalusProfile;
 
         private float _timeCounter;
 
@@ -53,6 +57,7 @@ namespace Gamekit2D
             _isSecondUseEnabled = true;
 
             SwitchTimeDifferentObjects(TimeState.Normal);
+            _normalProfile = _postProcess.profile;
         }
 
         #endregion
@@ -70,6 +75,8 @@ namespace Gamekit2D
             {
                 SwitchTimeDifferentObjects(TimeState.Normal);
             }
+
+            SwithPostprocessing(_timeState);
         }
 
         private void SwitchTimeDifferentObjects(TimeState newState)
@@ -83,6 +90,22 @@ namespace Gamekit2D
                 }
             }
         }
+
+        private void SwithPostprocessing(TimeState newState)
+        {
+            if (_postProcess != null)
+            {
+                if (_timeState == TimeState.Normal)
+                {
+                    _postProcess.profile = _normalProfile;
+                }
+                else
+                {
+                    _postProcess.profile = _anomalusProfile;
+                }
+            }
+        }
+
 
         #endregion
     }
