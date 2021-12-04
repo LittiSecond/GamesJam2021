@@ -5,17 +5,17 @@ using System.Collections;
 
 namespace Gamekit2D
 {
-    public sealed class TimeJumpController : MonoBehaviour
+    public sealed class TimeJumpSceneManager : MonoBehaviour
     {
         #region Fields
 
         [SerializeField] private BaseTimeDifferentObject[] _timeDifferentObjects;
-        [SerializeField] private float _secondUseDelay = 0.5f;
+        //[SerializeField] private float _secondUseDelay = 0.5f;
         [SerializeField] private PostProcessVolume _postProcess;
         [SerializeField] private PostProcessProfile _normalProfile;
         [SerializeField] private PostProcessProfile _anomalusProfile;
 
-        private float _timeCounter;
+        private float _secondUseTimeCounter;
 
         private TimeState _timeState;
 
@@ -27,29 +27,29 @@ namespace Gamekit2D
 
         #region UnityMethods
 
-        private void Update()
-        {
-            if (_isEnabled)
-            {
-                if (_isSecondUseEnabled && PlayerInput.Instance.TimeJump.Down)
-                {
-                    JumpThroughTime();
+        //private void Update()
+        //{
+        //    if (_isEnabled)
+        //    {
+        //        if (_isSecondUseEnabled && PlayerInput.Instance.TimeJump.Down)
+        //        {
+        //            JumpThroughTime();
 
-                    _timeCounter = _secondUseDelay;
-                    _isSecondUseEnabled = false;
-                }
-                else
-                {
-                    _timeCounter -= Time.deltaTime;
-                    if (_timeCounter <= 0.0f)
-                    {
-                        _isSecondUseEnabled = true;
-                        _timeCounter = 0.0f;
-                    }
-                }
+        //            _secondUseTimeCounter = _secondUseDelay;
+        //            _isSecondUseEnabled = false;
+        //        }
+        //        else
+        //        {
+        //            _secondUseTimeCounter -= Time.deltaTime;
+        //            if (_secondUseTimeCounter <= 0.0f)
+        //            {
+        //                _isSecondUseEnabled = true;
+        //                _secondUseTimeCounter = 0.0f;
+        //            }
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
         private void OnEnable()
         {
