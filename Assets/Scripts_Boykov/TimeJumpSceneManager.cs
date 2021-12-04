@@ -10,52 +10,19 @@ namespace Gamekit2D
         #region Fields
 
         [SerializeField] private BaseTimeDifferentObject[] _timeDifferentObjects;
-        //[SerializeField] private float _secondUseDelay = 0.5f;
         [SerializeField] private PostProcessVolume _postProcess;
         [SerializeField] private PostProcessProfile _normalProfile;
         [SerializeField] private PostProcessProfile _anomalusProfile;
 
-        private float _secondUseTimeCounter;
-
         private TimeState _timeState;
-
-        private bool _isEnabled;
-        private bool _isSecondUseEnabled;
 
         #endregion
 
 
         #region UnityMethods
 
-        //private void Update()
-        //{
-        //    if (_isEnabled)
-        //    {
-        //        if (_isSecondUseEnabled && PlayerInput.Instance.TimeJump.Down)
-        //        {
-        //            JumpThroughTime();
-
-        //            _secondUseTimeCounter = _secondUseDelay;
-        //            _isSecondUseEnabled = false;
-        //        }
-        //        else
-        //        {
-        //            _secondUseTimeCounter -= Time.deltaTime;
-        //            if (_secondUseTimeCounter <= 0.0f)
-        //            {
-        //                _isSecondUseEnabled = true;
-        //                _secondUseTimeCounter = 0.0f;
-        //            }
-        //        }
-
-        //    }
-        //}
-
         private void OnEnable()
         {
-            _isEnabled = true;
-            _isSecondUseEnabled = true;
-
             SwitchTimeDifferentObjects(TimeState.Normal);
             _normalProfile = _postProcess.profile;
         }
@@ -65,7 +32,7 @@ namespace Gamekit2D
 
         #region Methods
 
-        private void JumpThroughTime()
+        public void JumpThroughTime()
         {
             if (_timeState == TimeState.Normal)
             {

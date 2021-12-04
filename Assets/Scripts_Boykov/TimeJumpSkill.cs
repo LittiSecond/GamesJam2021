@@ -19,8 +19,9 @@ namespace Gamekit2D
 
         [SerializeField] private ChargeChangeEvent _chargeChangeEvent;
         [SerializeField] private UseSkillEvent _useSkillEvent;
+        [SerializeField] private UITimejumpTimerIndicator _timerIndicator;
 
-        [SerializeField] private float _anomaloutDuration = 10.0f;
+        [SerializeField] private float _anomalousDuration = 10.0f;
         [SerializeField] private float _reloadDuration = 5.0f;
         [SerializeField] private int _maxCharges = 5;
 
@@ -61,7 +62,7 @@ namespace Gamekit2D
                             {
                                 _useSkillEvent.Invoke();
                                 _timeState = TimeState.Anomalous;
-                                _timeCounter = _anomaloutDuration;
+                                _timeCounter = _anomalousDuration;
                             }
                         }
                     }
@@ -110,9 +111,10 @@ namespace Gamekit2D
 
         private void UpdateUi()
         {
-
+            float value = (_timeState == TimeState.Normal) ? 
+                _timeCounter / _reloadDuration : _timeCounter / _anomalousDuration;
+            _timerIndicator.SetValue(value);
         }
-
 
         #endregion
 

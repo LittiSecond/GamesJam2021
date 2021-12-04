@@ -29953,6 +29953,11 @@ PrefabInstance:
       propertyPath: OnGainHealth.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: Damageable, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 3693526565808580021, guid: 73360cdb4e1e7ed4897690f9d57fd0eb,
+        type: 3}
+      propertyPath: _timerIndicator
+      value: 
+      objectReference: {fileID: 942970119}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73360cdb4e1e7ed4897690f9d57fd0eb, type: 3}
 --- !u!1 &1141565045 stripped

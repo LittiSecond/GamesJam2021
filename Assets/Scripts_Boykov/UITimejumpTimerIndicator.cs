@@ -14,7 +14,7 @@ namespace Gamekit2D
         #endregion
 
 
-        #region Methods
+        #region methods
 
         public void SetValue(float value)
         {
