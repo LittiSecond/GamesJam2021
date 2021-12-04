@@ -15,14 +15,17 @@ namespace Gamekit2D
         private float _startSpeed;
         private TimeState _state;
 
+        private bool _isInitialized;
+
         #endregion
 
 
-        #region UnityMethods
+        #region Methods
 
-        private void Awake()
+        private void Initialize()
         {
             _startSpeed = _mover.speed;
+            _isInitialized = true;
         }
 
         #endregion
@@ -32,6 +35,11 @@ namespace Gamekit2D
 
         public override void SwitchTimeState(TimeState newState)
         {
+            if (!_isInitialized)
+            {
+                Initialize();
+            }
+
             if (_state != newState)
             {
                 for (int i = 0; i < _normalTimeObjects.Length; i++)
