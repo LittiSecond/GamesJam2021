@@ -12,7 +12,18 @@ namespace Gamekit2D
         [SerializeField] private MovingPlatform _mover;
         [SerializeField] private bool _moveInNormalTime;
 
+        private float _startSpeed;
         private TimeState _state;
+
+        #endregion
+
+
+        #region UnityMethods
+
+        private void Awake()
+        {
+            _startSpeed = _mover.speed;
+        }
 
         #endregion
 
@@ -33,7 +44,14 @@ namespace Gamekit2D
                     _anomalousTimeObjects[i].SetActive(newState == TimeState.Anomalous);
                 }
 
-                _mover.enabled = !(_moveInNormalTime ^ (newState == TimeState.Normal));
+                if (!(_moveInNormalTime ^ (newState == TimeState.Normal)))
+                {
+                    _mover.speed = _startSpeed;
+                }
+                else
+                {
+                    _mover.speed = 0.0f;
+                }
 
                 _state = newState;
             }
