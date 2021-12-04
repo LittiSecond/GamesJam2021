@@ -57,7 +57,10 @@ namespace Gamekit2D
             _isSecondUseEnabled = true;
 
             SwitchTimeDifferentObjects(TimeState.Normal);
-            _normalProfile = _postProcess.profile;
+            if (_postProcess != null)
+            {
+                _normalProfile = _postProcess.profile;
+            }
         }
 
         #endregion
