@@ -24,13 +24,13 @@ namespace Gamekit2D
         [SerializeField] private float _anomalousDuration = 10.0f;
         [SerializeField] private float _reloadDuration = 5.0f;
         [SerializeField] private int _maxCharges = 5;
-        [HideInInspector]
-        public DataSettings _dataSettings;
+
+        [HideInInspector] public DataSettings _dataSettings;
 
         private float _doublePressDelay = 0.2f;
         private float _timeCounter;
 
-        private int _currentCharges = 4;
+        private int _currentCharges;
         private TimeState _timeState;
 
         private bool _isRedy;
@@ -117,6 +117,12 @@ namespace Gamekit2D
 
         #region Methods
 
+        public void Rechage()
+        {
+            _currentCharges = _maxCharges;
+            _chargeChangeEvent.Invoke(this);
+        }
+
         private bool SpendCharge()
         {
             if (_currentCharges <= 0)
@@ -143,7 +149,7 @@ namespace Gamekit2D
                 value = _timeCounter / _anomalousDuration;
             }
 
-            _timerIndicator.SetValue(value);
+            _timerIndicator?.SetValue(value);
         }
 
         #endregion
