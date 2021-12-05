@@ -12,21 +12,9 @@ namespace Gamekit2D
         [SerializeField] private MovingPlatform _mover;
         [SerializeField] private bool _moveInNormalTime;
 
-        private float _startSpeed;
         private TimeState _state;
 
         private bool _isInitialized;
-
-        #endregion
-
-
-        #region Methods
-
-        private void Initialize()
-        {
-            _startSpeed = _mover.speed;
-            _isInitialized = true;
-        }
 
         #endregion
 
@@ -35,11 +23,6 @@ namespace Gamekit2D
 
         public override void SwitchTimeState(TimeState newState)
         {
-            if (!_isInitialized)
-            {
-                Initialize();
-            }
-
             if (_state != newState)
             {
                 for (int i = 0; i < _normalTimeObjects.Length; i++)
@@ -52,13 +35,13 @@ namespace Gamekit2D
                     _anomalousTimeObjects[i].SetActive(newState == TimeState.Anomalous);
                 }
 
-                if (!(_moveInNormalTime ^ (newState == TimeState.Normal)))
+                if (_moveInNormalTime == (newState == TimeState.Normal))
                 {
-                    _mover.speed = _startSpeed;
+                    _mover.StartMoving();
                 }
                 else
                 {
-                    _mover.speed = 0.0f;
+                    _mover.StopMoving();
                 }
 
                 _state = newState;
