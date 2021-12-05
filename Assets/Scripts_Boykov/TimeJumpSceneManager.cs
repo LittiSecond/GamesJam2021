@@ -50,6 +50,10 @@ namespace Gamekit2D
 
         private void SwitchTimeDifferentObjects(TimeState newState)
         {
+            if (_timeDifferentObjects.Length == 0)
+            {
+                _timeDifferentObjects = GameObject.FindObjectsOfType<BaseTimeDifferentObject>();
+            }
             if (_timeDifferentObjects.Length > 0)
             {
                 for (int i = 0; i < _timeDifferentObjects.Length; i++)

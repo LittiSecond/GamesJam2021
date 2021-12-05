@@ -27,10 +27,10 @@ namespace Gamekit2D
 
         [HideInInspector] public DataSettings _dataSettings;
 
-        private float _doublePressDelay = 0.2f;
+        private float _doublePressDelay = 0.4f;
         private float _timeCounter;
 
-        private int _currentCharges;
+        private int _currentCharges = 2;
         private TimeState _timeState;
 
         private bool _isRedy;
