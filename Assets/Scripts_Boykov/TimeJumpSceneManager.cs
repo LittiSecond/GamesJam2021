@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using System.Collections.Generic;
 
 
 namespace Gamekit2D
@@ -13,12 +14,35 @@ namespace Gamekit2D
         [SerializeField] private PostProcessProfile _normalProfile;
         [SerializeField] private PostProcessProfile _anomalusProfile;
 
+        private static TimeJumpSceneManager _instance;
+
+        private List<BaseTimeDifferentObject> _additionalObjects = new List<BaseTimeDifferentObject>();
+
         private TimeState _timeState;
 
         #endregion
 
 
+        #region Properties
+
+        public static TimeJumpSceneManager Instance
+        {
+            get { return _instance; }
+        }
+
+        #endregion
+
+
+
         #region UnityMethods
+
+        private void Awake()
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+            }
+        }
 
         private void OnEnable()
         {
@@ -60,6 +84,11 @@ namespace Gamekit2D
                 {
                     _timeDifferentObjects[i].SwitchTimeState(newState);
                 }
+
+                for (int i = 0; i < _additionalObjects.Count; i++)
+                {
+                    _additionalObjects[i].SwitchTimeState(newState);
+                }
             }
         }
 
@@ -78,6 +107,18 @@ namespace Gamekit2D
             }
         }
 
+        public void Add(BaseTimeDifferentObject newObject)
+        {
+            if (!_additionalObjects.Contains(newObject))
+            {
+                _additionalObjects.Add(newObject);
+            }
+        }
+
+        public void Remove(BaseTimeDifferentObject obj)
+        {
+            _additionalObjects.Remove(obj);
+        }
 
         #endregion
     }
