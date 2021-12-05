@@ -14,7 +14,7 @@ namespace Gamekit2D
         #endregion
 
 
-        #region IInterfaces
+        #region ITimeDifferentObject
 
         public override void SwitchTimeState(TimeState newState)
         {

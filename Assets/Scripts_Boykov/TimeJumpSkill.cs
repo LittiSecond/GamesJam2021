@@ -24,10 +24,13 @@ namespace Gamekit2D
         [SerializeField] private float _anomalousDuration = 10.0f;
         [SerializeField] private float _reloadDuration = 5.0f;
         [SerializeField] private int _maxCharges = 5;
+        [HideInInspector]
+        public DataSettings _dataSettings;
 
+        private float _doublePressDelay = 0.2f;
         private float _timeCounter;
 
-        private int _currentCharges;
+        private int _currentCharges = 4;
         private TimeState _timeState;
 
         private bool _isRedy;
@@ -50,18 +53,21 @@ namespace Gamekit2D
 
         private void OnEnable()
         {
-            //PersistentDataManager.RegisterPersister(this);
+            PersistentDataManager.RegisterPersister(this);
 
             _chargeChangeEvent.Invoke(this);
 
+            _timeCounter = _reloadDuration;
+            _timeState = TimeState.Normal;
+            _isRedy = true;
+            _isEnabled = true;
+            UpdateUi();
         }
 
         private void Update()
         {
             if (_isEnabled)
             {
-                //if (_isSecondUseEnabled && PlayerInput.Instance.TimeJump.Down)
-
                 if (_timeState == TimeState.Normal)
                 {
                     if (_isRedy)
@@ -70,9 +76,9 @@ namespace Gamekit2D
                         {
                             if (SpendCharge())
                             {
-                                _useSkillEvent.Invoke();
                                 _timeState = TimeState.Anomalous;
                                 _timeCounter = _anomalousDuration;
+                                _useSkillEvent.Invoke();
                             }
                         }
                     }
@@ -91,11 +97,16 @@ namespace Gamekit2D
                 {
                     _timeCounter -= Time.deltaTime;
                     UpdateUi();
-                    if ( (_timeCounter <= 0.0) || PlayerInput.Instance.TimeJump.Down)
+
+                    if ( _timeCounter < _anomalousDuration - _doublePressDelay  )
                     {
-                        _timeCounter = 0.0f;
-                        _timeState = TimeState.Normal;
-                        _isRedy = false;
+                        if ((_timeCounter <= 0.0) || PlayerInput.Instance.TimeJump.Down)
+                        {
+                            _timeCounter = 0.0f;
+                            _timeState = TimeState.Normal;
+                            _isRedy = false;
+                            _useSkillEvent.Invoke();
+                        }
                     }
                 }
 
@@ -121,8 +132,17 @@ namespace Gamekit2D
 
         private void UpdateUi()
         {
-            float value = (_timeState == TimeState.Normal) ? 
-                _timeCounter / _reloadDuration : _timeCounter / _anomalousDuration;
+            float value;
+
+            if (_timeState == TimeState.Normal)
+            {
+                value = _timeCounter / _reloadDuration; 
+            }
+            else
+            {
+                value = _timeCounter / _anomalousDuration;
+            }
+
             _timerIndicator.SetValue(value);
         }
 
@@ -133,22 +153,24 @@ namespace Gamekit2D
 
         public DataSettings GetDataSettings()
         {
-            throw new System.NotImplementedException();
+            return _dataSettings;
         }
 
         public void LoadData(Data data)
         {
-            throw new System.NotImplementedException();
+            Data<int> chargeData = (Data<int>)data;
+            _currentCharges = chargeData.value;
         }
 
         public Data SaveData()
         {
-            throw new System.NotImplementedException();
+            return new Data<int>(_currentCharges);
         }
 
         public void SetDataSettings(string dataTag, DataSettings.PersistenceType persistenceType)
         {
-            throw new System.NotImplementedException();
+            _dataSettings.dataTag = dataTag;
+            _dataSettings.persistenceType = persistenceType;
         }
 
         #endregion

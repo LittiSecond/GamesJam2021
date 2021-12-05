@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-using System.Collections;
 
 
 namespace Gamekit2D
@@ -25,6 +24,7 @@ namespace Gamekit2D
         {
             SwitchTimeDifferentObjects(TimeState.Normal);
             _normalProfile = _postProcess.profile;
+            _timeState = TimeState.Normal;
         }
 
         #endregion
@@ -36,24 +36,25 @@ namespace Gamekit2D
         {
             if (_timeState == TimeState.Normal)
             {
-                SwitchTimeDifferentObjects(TimeState.Anomalous);
+                _timeState = TimeState.Anomalous;
             }
             else
             {
-                SwitchTimeDifferentObjects(TimeState.Normal);
+                _timeState = TimeState.Normal;
             }
+
+            SwitchTimeDifferentObjects(_timeState);
 
             SwithPostprocessing(_timeState);
         }
 
         private void SwitchTimeDifferentObjects(TimeState newState)
         {
-            _timeState = newState;
             if (_timeDifferentObjects.Length > 0)
             {
                 for (int i = 0; i < _timeDifferentObjects.Length; i++)
                 {
-                    _timeDifferentObjects[i].SwitchTimeState(_timeState);
+                    _timeDifferentObjects[i].SwitchTimeState(newState);
                 }
             }
         }
@@ -62,7 +63,7 @@ namespace Gamekit2D
         {
             if (_postProcess != null)
             {
-                if (_timeState == TimeState.Normal)
+                if (newState == TimeState.Normal)
                 {
                     _postProcess.profile = _normalProfile;
                 }
